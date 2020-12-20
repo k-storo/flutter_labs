@@ -10,6 +10,7 @@ import 'package:crunchyroll_app/screens/tabs_screen.dart';
 import 'package:crunchyroll_app/models/watched.dart';
 import 'package:crunchyroll_app/screens/watched.dart';
 
+//lab3
 void main() {
   runApp(MyApp());
 }
