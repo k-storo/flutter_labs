@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:crunchyroll_app/screens/elements/MyClickedButton.dart';
 
 class MyHomePage extends StatelessWidget {
   static Route<dynamic> route() => MaterialPageRoute(
@@ -141,46 +142,6 @@ ListView _getMainPage() {
       horizontalListView('Приключения/Экшн', titles, images),
     ],
   );
-}
-
-FloatingActionButton _getFloatingButton() {
-  return FloatingActionButton.extended(
-    icon: Icon(Icons.monetization_on),
-    label: Text('ОФОРМИТЬ ПРЕМИУМ'),
-    backgroundColor: Colors.orangeAccent,
-    onPressed: () {},
-    shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
-  );
-}
-
-class MyClickedButton extends StatefulWidget {
-  MyClickedButton({Key key, this.onPressed}) : super(key: key);
-
-  // allow the widget that renders this widget to pass
-  // in a callback for when the button is pressed
-  final Function() onPressed;
-
-  @override
-  MyClickedButtonState createState() => MyClickedButtonState();
-}
-
-class MyClickedButtonState extends State<MyClickedButton> {
-  bool pressed = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-      icon: pressed ? Icon(Icons.monetization_on) : Icon(Icons.military_tech),
-      label: pressed ? Text('ОФОРМИТЬ ПРЕМИУМ') : Text('ПРЕМИУМ ПОЛЬЗОВАТЕЛЬ'),
-      backgroundColor: pressed ? Colors.orangeAccent : Colors.green,
-      onPressed: () {
-        setState(() => {pressed = !pressed});
-        // call the callback that was passed in from the parent widget
-        widget.onPressed();
-      },
-      shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
-    );
-  }
 }
 
 Widget horizontalListView(title, titles, images) {
