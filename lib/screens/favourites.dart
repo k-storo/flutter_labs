@@ -37,7 +37,7 @@ class _FavouritesList extends StatelessWidget {
       itemCount: favourites.items.length,
       itemBuilder: (context, index) => ListTile(
         leading: CircleAvatar(
-          backgroundImage: AssetImage(favourites.items[index].picture),
+          backgroundImage: NetworkImage(favourites.items[index].picture),
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete_forever_outlined),
@@ -52,4 +52,4 @@ class _FavouritesList extends StatelessWidget {
       ),
     );
   }
-}
+} //

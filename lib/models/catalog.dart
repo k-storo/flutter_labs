@@ -1,33 +1,25 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+
+Future<List<Item>> fetchItems(http.Client client) async {
+  final response = await client
+      .get('https://my-json-server.typicode.com/k-storo/json_example/catalog');
+
+  // Use the compute function to run parseItems in a separate isolate.
+  return compute(parseItems, response.body);
+}
+
+// A function that converts a response body into a List<Item>.
+List<Item> parseItems(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Item>((json) => Item.fromJson(json)).toList();
+}
+
 class CatalogModel {
-  static List<String> itemNames = [
-    'Naruto',
-    'Fate: Stay at Night',
-    'Tora Dora',
-    'Boruto',
-    'Steins Gate',
-    'God Eater',
-    'God Of Highschool',
-    'Evangelion',
-    'Fullmetal Alchemist',
-    'Shaman King',
-    'Future Diary',
-    'Overlord',
-    'Madoka Magica',
-  ];
-
-  static List itemPictures = [
-    'assets/images/anime1.jpg',
-    'assets/images/anime2.png',
-    'assets/images/anime3.jpg',
-    'assets/images/anime4.jpg',
-    'assets/images/anime5.jpg',
-    'assets/images/anime6.jpg',
-    'assets/images/anime7.jpg',
-  ];
-
-  static List<int> watchingHoursList = [2, 4, 8, 16, 32, 120];
-
-  Item getById(int id) => Item(id, itemNames[id % itemNames.length]);
+  Item getById(int id) => Item();
 
   Item getByPosition(int position) {
     return getById(position);
@@ -38,18 +30,41 @@ class Item {
   final int id;
   final String name;
   final String picture;
-  int viewCount = 2943;
+  final String desc;
   final int watchingHours;
+  final int viewCount;
+  final String type;
+  final String watchType;
+  final String videoUrl;
 
-  Item(this.id, this.name)
-      : picture =
-            CatalogModel.itemPictures[id % CatalogModel.itemPictures.length],
-        watchingHours = CatalogModel
-            .watchingHoursList[id % CatalogModel.watchingHoursList.length];
+  Item(
+      {this.id,
+      this.name,
+      this.picture,
+      this.desc,
+      this.watchingHours,
+      this.viewCount,
+      this.type,
+      this.watchType,
+      this.videoUrl});
+
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      picture: json['picture'] as String,
+      desc: json['desc'] as String,
+      watchingHours: json['watchinghours'] as int,
+      viewCount: json['viewcount'] as int,
+      type: json['type'] as String,
+      watchType: json['watchtype'] as String,
+      videoUrl: json['videourl'] as String,
+    );
+  }
 
   @override
   int get hashCode => id;
 
   @override
   bool operator ==(Object other) => other is Item && other.id == id;
-}
+} //

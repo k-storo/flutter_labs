@@ -1,3 +1,4 @@
+import 'package:crunchyroll_app/screens/profile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:crunchyroll_app/screens/home.dart';
@@ -38,7 +39,7 @@ class TabNavigationItem {
           label: Text("Онгоинги"),
         ),
         TabNavigationItem(
-          page: MyWorkInProgress(),
+          page: MyProfile(),
           icon: Icon(Icons.account_circle_outlined),
           label: Text("Профиль"),
         ),

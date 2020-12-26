@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:crunchyroll_app/models/tab_navigation_item.dart';
+import 'package:provider/provider.dart';
+import 'package:crunchyroll_app/models/DarkThemeProvider.dart';
 
 class TabsPage extends StatefulWidget {
   @override
@@ -18,7 +20,7 @@ class _TabsPageState extends State<TabsPage> {
           for (final tabItem in TabNavigationItem.items) tabItem.page,
         ],
       ),
-      drawer: _getDrawer(),
+      drawer: MyDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.blueGrey,
@@ -37,8 +39,11 @@ class _TabsPageState extends State<TabsPage> {
       ),
     );
   }
+}
 
-  Drawer _getDrawer() {
+class MyDrawer extends StatelessWidget {
+  Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -57,6 +62,14 @@ class _TabsPageState extends State<TabsPage> {
                 Text("Kostya Storozhuk"),
               ],
             ),
+          ),
+          SwitchListTile(
+            title: Text('Ночной режим'),
+            value: themeChange.darkTheme,
+            onChanged: (bool value) {
+              themeChange.darkTheme = value;
+            },
+            secondary: Icon(Icons.nights_stay_outlined),
           ),
           ListTile(
             leading: Icon(Icons.ondemand_video_outlined),

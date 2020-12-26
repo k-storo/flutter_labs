@@ -20,7 +20,7 @@ class MyWatched extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(5),
-                child: _FavouritesList(),
+                child: _WatchedList(),
               ),
             ),
             Divider(height: 4, color: Colors.white),
@@ -30,9 +30,9 @@ class MyWatched extends StatelessWidget {
       ),
     );
   }
-}
+} //
 
-class _FavouritesList extends StatelessWidget {
+class _WatchedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var itemNameStyle = Theme.of(context).textTheme.headline6;
@@ -43,7 +43,7 @@ class _FavouritesList extends StatelessWidget {
       itemCount: favourites.items.length,
       itemBuilder: (context, index) => ListTile(
         leading: CircleAvatar(
-          backgroundImage: AssetImage(favourites.items[index].picture),
+          backgroundImage: NetworkImage(favourites.items[index].picture),
         ),
         trailing: IconButton(
           icon: Icon(Icons.delete_forever_outlined),
@@ -73,7 +73,7 @@ class _WatchedTotal extends StatelessWidget {
             SizedBox(width: 24),
             Consumer<WatchedModel>(
                 builder: (context, watched, child) => Text(
-                    'Количество просмотренных тайтлов: ${context.watch<WatchedModel>().items.length}.\nЧасов, проведенных за просмотром: ${watched.totalWatchingHours}.\n')),
+                    'Количество просмотренных тайтлов: ${context.watch<WatchedModel>().items.length}.\n')),
             SizedBox(width: 24),
           ],
         ),

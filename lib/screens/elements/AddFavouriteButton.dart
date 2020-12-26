@@ -15,12 +15,13 @@ class AddFavouriteButton extends StatelessWidget {
     );
 
     return IconButton(
-      onPressed: isInFavourites
-          ? null
-          : () {
-              var favourites = context.read<FavouritesModel>();
-              favourites.add(item);
-            },
+      tooltip: isInFavourites ? 'Добавлено' : 'Добавить в закладки',
+      onPressed: () {
+        if (!isInFavourites) {
+          var favourites = context.read<FavouritesModel>();
+          favourites.add(item);
+        }
+      },
       highlightColor: Colors.orange,
       icon: isInFavourites
           ? Icon(

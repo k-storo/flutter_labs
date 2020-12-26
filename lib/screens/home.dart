@@ -9,7 +9,8 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _getAppBar(),
+        key: scaffoldKey,
+        appBar: MyAppBar(),
         body: _getMainPage(),
         //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: MyClickedButton() //MyClickedButton(),
@@ -37,28 +38,40 @@ final List<String> images = <String>[
   'assets/images/anime2.png',
   'assets/images/anime1.jpg'
 ];
+final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+final SnackBar snackBar = const SnackBar(
+    backgroundColor: Colors.black,
+    content: Text('К сожелению, поиск еще не реализован'));
 
-AppBar _getAppBar() {
-  return AppBar(
-    leading: const Padding(
-      padding: EdgeInsets.only(top: 16.0, bottom: 16, left: 16.0),
-      child: ClipOval(
-        child: Image(
-          image: AssetImage('assets/images/logo.png'),
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  @override
+  Size get preferredSize => const Size.fromHeight(50);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: const Padding(
+        padding: EdgeInsets.only(top: 16.0, bottom: 16, left: 16.0),
+        child: ClipOval(
+          child: Image(
+            image: AssetImage('assets/images/logo.png'),
+          ),
         ),
       ),
-    ),
-    title: Text(
-      "crunchyroll",
-      style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
-    ),
-    actions: <Widget>[
-      IconButton(
-        icon: const Icon(Icons.search),
-        onPressed: () => {},
+      title: Text(
+        "crunchyroll",
+        style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
       ),
-    ],
-  );
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            scaffoldKey.currentState.showSnackBar(snackBar);
+          },
+        ),
+      ],
+    );
+  }
 }
 
 ListView _getMainPage() {
@@ -83,8 +96,7 @@ ListView _getMainPage() {
                         color: Colors.orangeAccent)),
                 TextSpan(
                     text: "ORIGINALS",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900, color: Colors.white)),
+                    style: TextStyle(fontWeight: FontWeight.w900)),
               ],
             ),
           ))),

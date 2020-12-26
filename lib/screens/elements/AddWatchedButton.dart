@@ -15,13 +15,13 @@ class AddWatchedButton extends StatelessWidget {
     );
 
     return IconButton(
-      onPressed: isInWatched
-          ? null
-          : () {
-              var watched = context.read<WatchedModel>();
-              watched.add(item);
-            },
-      highlightColor: Colors.greenAccent,
+      tooltip: isInWatched ? 'Просмотрено' : 'Добавить в просмотренное',
+      onPressed: () {
+        if (!isInWatched) {
+          var watched = context.read<WatchedModel>();
+          watched.add(item);
+        }
+      },
       icon: isInWatched
           ? Icon(
               Icons.done_all_sharp,
